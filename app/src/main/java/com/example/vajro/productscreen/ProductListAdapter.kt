@@ -3,6 +3,7 @@ package com.example.vajro.productscreen
 import Products
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,18 +22,13 @@ import com.example.vajro.database.DatabaseHelper
 class ProductListAdapter  (val mContext: Context,val products: List<Products>,val onItemClick: OnItemClick) :
     RecyclerView.Adapter<ProductListAdapter.ViewHolder>(){
     lateinit var view: View
-    private var db: DatabaseHelper? = null
+    private var db: DatabaseHelper=DatabaseHelper(mContext)
     var count=1
-    var select:List<String>?=null
+    var values = db!!.allAuth
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListAdapter.ViewHolder {
         view = LayoutInflater.from(parent.context).inflate(R.layout.productlist, parent, false)
-        db = DatabaseHelper(mContext)
-        if (db!!.getCount() > 0) {
-            val values = db!!.allAuth
-            select=values.productid
-        }
         return ViewHolder(view)
     }
 
@@ -60,13 +56,18 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
             var minus_btn=view.findViewById<AppCompatButton>(R.id.minus_btn)
             var tvcount=view.findViewById<AppCompatTextView>(R.id.tv_count)
             var wishlistimage = view.findViewById<AppCompatImageView>(R.id.product_list_image_wishList)
-            if (select!=null)
-            for (i in 0 until select!!.size){
-                if (objectmenu.product_id.equals(select!!.get(i))){
-                    add_btn.visibility=View.GONE
-                    inclayout.visibility=View.VISIBLE
+                for (i in 0 until db.count){
+                    if (objectmenu.name.equals(values.productid.get(i))){
+                        Log.d("shil","3")
+                        count=values.quantity.get(i).toInt()
+                        tvcount.text=values.quantity.get(i)
+                        inclayout.visibility=View.VISIBLE
+                        add_btn.visibility=View.GONE
+                    }
                 }
-            }
+
+
+
 
             layout.setOnClickListener(View.OnClickListener {
                 var intent = Intent(mContext, ProductdeatilActivity::class.java)
@@ -75,6 +76,7 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
                 intent.putExtra("price", products.get(position).price)
                 intent.putExtra("detail", products.get(position).description)
                 intent.putExtra("id", products.get(position).product_id)
+                intent.putExtra("quantity", count)
                 if (add_btn.visibility.equals(View.VISIBLE)){
                     intent.putExtra("isitemadded", true)
                 }else{
@@ -107,12 +109,13 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
             plus_btn.setOnClickListener(View.OnClickListener {
                 count++;
                 tvcount.text=count.toString()
-
+                db!!.updateNote(objectmenu.name,count.toString(),objectmenu.price,objectmenu.image.toString())
             })
             minus_btn.setOnClickListener(View.OnClickListener {
                 if (count>1){
                     count--;
                     tvcount.text=count.toString()
+                    db!!.updateNote(objectmenu.name,count.toString(),objectmenu.price,objectmenu.image.toString())
                 }
             })
 

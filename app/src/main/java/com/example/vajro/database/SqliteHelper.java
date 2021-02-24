@@ -26,7 +26,7 @@ public class SqliteHelper {
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN__PRODUCT_ID + " TEXT,"
                     + COLUMN__QUANTITY + " TEXT,"
-                    + COLUMN__PRICE + " TEXT"
+                    + COLUMN__PRICE + " TEXT,"
                     + COLUMN__IMAGE + " TEXT"
                     + ")";
 

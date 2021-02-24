@@ -32,37 +32,20 @@ class ShoppingCartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_shopping_cart)
         db = DatabaseHelper(this)
-       // writedb()
-        val cartAPI = NetworkService.instance.create(CartInterface::class.java)
-        val getProductsRequest: Call<product_response_Base?>? = cartAPI.products()
-        //context.showProgressDialog()
-        getProductsRequest?.enqueue(object : Callback<product_response_Base?> {
-            override fun onFailure(call: Call<product_response_Base?>, t: Throwable) {
-            }
+        if (db!!.getCount() > 0){
+            val values = db!!.allAuth
+            shoppingadapter = ShoppingCartAdapter(applicationContext)
+            val mGridLayoutManager = GridLayoutManager(applicationContext, 1)
+            mGridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            binding.rvCartlist.setLayoutManager(mGridLayoutManager)
+            binding.rvCartlist.setNestedScrollingEnabled(false)
+            binding.rvCartlist.setAdapter(shoppingadapter)
+            binding.tvToolbarTitle.text="My Cart ("+values.productid.size+")"
+            binding.empty.visibility=View.GONE
+        }else{
+        binding.empty.visibility=View.VISIBLE
+        }
 
-            override fun onResponse(
-                call: Call<product_response_Base?>,
-                response: Response<product_response_Base?>
-            ) {
-                productbase=response?.body()
-                  if (db!!.getCount() > 0) {
-                    val values = db!!.allAuth
-                    shoppingadapter = ShoppingCartAdapter(applicationContext,productbase!!.products,values.productid)
-                    val mGridLayoutManager = GridLayoutManager(applicationContext, 1)
-                    mGridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                    binding.rvCartlist.setLayoutManager(mGridLayoutManager)
-                    binding.rvCartlist.setNestedScrollingEnabled(false)
-                    binding.rvCartlist.setAdapter(shoppingadapter)
-                      binding.tvToolbarTitle.text="My Cart ("+values.productid.size+")"
-                      binding.empty.visibility=View.GONE
-
-
-                  }else{
-                      binding.empty.visibility=View.VISIBLE
-                  }
-            }
-
-        })
         binding.homeIcon.setOnClickListener(View.OnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             this!!.startActivity(intent)

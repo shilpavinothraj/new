@@ -66,13 +66,8 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnItemClick {
         }
 
         binding.cartIcon.setOnClickListener(View.OnClickListener {
-            if (isloaded){
-                var intent = Intent(this, ShoppingCartActivity::class.java)
+                 var intent = Intent(this, ShoppingCartActivity::class.java)
                 this!!.startActivity(intent)
-            }else{
-
-                Toast.makeText(this@MainActivity, "Please wait somemore time for loading data!", Toast.LENGTH_SHORT).show()
-            }
 
         })
 

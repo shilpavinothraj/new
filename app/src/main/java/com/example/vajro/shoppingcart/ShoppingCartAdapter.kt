@@ -16,14 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vajro.R
 import com.example.vajro.database.DatabaseHelper
+import com.example.vajro.database.SqliteHelper
 import com.example.vajro.productscreen.ProductListAdapter
 import com.example.vajro.productscreen.ProductdeatilActivity
 
-class ShoppingCartAdapter  (val mContext: Context,val list: List<Products>,val selct:List<String>) :
+class ShoppingCartAdapter  (val mContext: Context) :
 RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
     lateinit var view: View
     var count=1
-    private var db: DatabaseHelper? = null
+    private var db: DatabaseHelper=DatabaseHelper(mContext)
+    var values=db!!.allAuth
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingCartAdapter.ViewHolder {
         view = LayoutInflater.from(parent.context).inflate(R.layout.shoppingcart, parent, false)
@@ -31,18 +33,18 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return selct.size
+        return db.count
     }
     override fun getItemViewType(position: Int): Int {
         return position
     }
     override fun onBindViewHolder(holder: ShoppingCartAdapter.ViewHolder, position: Int) {
-        holder.bindItems(selct.get(position), view, position)
+        holder.bindItems(values.productid.get(position),values.quantity.get(position),values.image.get(position),values.price.get(position), view, position)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(objectmenu: String, views: View, position: Int) {
+        fun bindItems(name: String,quantity:String,image:String,price:String, views: View, position: Int) {
 
 
             var productimage = view.findViewById<AppCompatImageView>(R.id.productimage)
@@ -54,21 +56,19 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
             var tot=view.findViewById<AppCompatTextView>(R.id.tv_product_tot_price)
 
 
-            for (i in 0 until list!!.size){
-                if (objectmenu.equals(list.get(i).product_id)){
-                    Glide.with(mContext)
-                        .load(list.get(i).image)
-                        .placeholder(R.drawable.ic_launcher_background)
-                        .dontAnimate().into(productimage)
-                    product_heading.text=list.get(i).name
-                    product_price.text=list.get(i).price
-                    tot.text=list.get(i).price
-                }
-            }
+            Glide.with(mContext)
+                    .load(image)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .dontAnimate().into(productimage)
+            product_heading.text=name
+            product_price.text=price
+            tvcount.text=quantity
+            count=quantity.toInt()
+           // tot.text=quantity.toInt()*price.split(1).toInt()
             plus_btn.setOnClickListener(View.OnClickListener {
                 count++;
                 tvcount.text=count.toString()
-                db = DatabaseHelper(mContext)
+                db!!.updateNote(name,count.toString(),price,image.toString())
 //                db?.deleteNote(position)
 
             })
@@ -76,6 +76,7 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
                 if (count>1){
                     count--;
                     tvcount.text=count.toString()
+                    db!!.updateNote(name,count.toString(),price,image.toString())
                 }
             })
 

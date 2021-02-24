@@ -40,6 +40,8 @@ class ProductdeatilActivity : AppCompatActivity() {
         binding.tvDescription.text=SpannableStringBuilder( intent.getStringExtra("detail"))
         var url:String=SpannableStringBuilder( intent.getStringExtra("image")).toString()
         binding.tvToolbarTitle.text=SpannableStringBuilder( intent.getStringExtra("title"))
+        count=intent.getIntExtra("quantity",1)
+        binding.tvCount.text=count.toString()
         var productid=SpannableStringBuilder( intent.getStringExtra("id"))
         isadded= intent.getBooleanExtra("isitemadded",false)
         if (isadded){
