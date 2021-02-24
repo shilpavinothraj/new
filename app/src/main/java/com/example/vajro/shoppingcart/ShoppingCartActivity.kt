@@ -72,11 +72,4 @@ class ShoppingCartActivity : AppCompatActivity() {
         })
 
     }
-    fun writedb(){
-        try {
-            db!!.insertAuth("10519")
-
-        } catch (e: Exception) {
-        }
-    }
 }

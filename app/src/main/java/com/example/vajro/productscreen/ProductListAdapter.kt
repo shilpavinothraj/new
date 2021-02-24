@@ -94,7 +94,7 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
             })
 
             add_btn.setOnClickListener(View.OnClickListener {
-                writedb(objectmenu.id)
+                writedb(objectmenu.name,objectmenu.price,objectmenu.image.toString());
                 add_btn.visibility=View.GONE
                 inclayout.visibility=View.VISIBLE
                 if (db!=null&&db!!.getCount() > 0) {
@@ -123,10 +123,10 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
             product_heading.text=objectmenu.name
             product_price.text=objectmenu.price
         }
-        fun writedb(productid: String){
+        fun writedb(productid: String,price:String,image:String){
             try {
                 db = DatabaseHelper(mContext)
-                db!!.insertAuth(productid)
+                db!!.insertAuth(productid,count.toString(),price,image)
 
             } catch (e: Exception) {
             }

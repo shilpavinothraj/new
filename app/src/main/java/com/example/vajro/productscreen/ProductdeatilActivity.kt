@@ -65,7 +65,7 @@ class ProductdeatilActivity : AppCompatActivity() {
 
         })
         binding.addcart.setOnClickListener(View.OnClickListener {
-            writedb(productid.toString())
+            writedb(binding.productName.text.toString(),binding.productPrice.text.toString(),url)
             binding.addcart.visibility=View.GONE
             if (db!!.getCount() > 0) {
                 val values = db!!.allAuth
@@ -93,10 +93,10 @@ class ProductdeatilActivity : AppCompatActivity() {
             .placeholder(R.drawable.ic_launcher_background)
             .dontAnimate().into(binding.productimage)
     }
-    fun writedb(productid: String){
+    fun writedb(productid: String,price:String,image:String){
         try {
             db = DatabaseHelper(this)
-            db!!.insertAuth(productid)
+            db!!.insertAuth(productid,count.toString(),price,image)
 
         } catch (e: Exception) {
         }

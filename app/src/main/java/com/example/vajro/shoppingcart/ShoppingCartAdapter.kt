@@ -69,7 +69,7 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
                 count++;
                 tvcount.text=count.toString()
                 db = DatabaseHelper(mContext)
-                db?.deleteNote(position)
+//                db?.deleteNote(position)
 
             })
             minus_btn.setOnClickListener(View.OnClickListener {
