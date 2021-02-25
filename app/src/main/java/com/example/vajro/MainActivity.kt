@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnItemClick {
         }else{
             binding.cartCount.text="0"
         }
+        db.allAuth
+        productListAdapter?.notifyDataSetChanged()
         super.onResume()
     }
 
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity(),ProductListAdapter.OnItemClick {
             binding.cartCount.text="0"
         }
 
-        binding.cartIcon.setOnClickListener(View.OnClickListener {
+        binding.cartlayout.setOnClickListener(View.OnClickListener {
                  var intent = Intent(this, ShoppingCartActivity::class.java)
                 this!!.startActivity(intent)
 

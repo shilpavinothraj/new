@@ -1,7 +1,9 @@
 package com.example.vajro.shoppingcart
 
 import Products
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +22,7 @@ import com.example.vajro.database.SqliteHelper
 import com.example.vajro.productscreen.ProductListAdapter
 import com.example.vajro.productscreen.ProductdeatilActivity
 
-class ShoppingCartAdapter  (val mContext: Context) :
+class ShoppingCartAdapter  (val mContext: Context,val onItemClick: OnDeleteItemClick) :
 RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
     lateinit var view: View
     var count=1
@@ -54,6 +56,7 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
             var minus_btn = view.findViewById<AppCompatButton>(R.id.minus_btn)
             var tvcount = view.findViewById<AppCompatTextView>(R.id.tv_count)
             var tot=view.findViewById<AppCompatTextView>(R.id.tv_product_tot_price)
+            var delete=view.findViewById<AppCompatButton>(R.id.btn_delete)
 
 
             Glide.with(mContext)
@@ -64,10 +67,12 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
             product_price.text=price
             tvcount.text=quantity
             count=quantity.toInt()
-           // tot.text=quantity.toInt()*price.split(1).toInt()
+            var pp=price.replace(",","")
+            tot.text="₹"+(pp.substring(1).toInt()*quantity.toInt()).toString()
             plus_btn.setOnClickListener(View.OnClickListener {
                 count++;
                 tvcount.text=count.toString()
+                tot.text="₹"+(pp.substring(1).toInt()*count).toString()
                 db!!.updateNote(name,count.toString(),price,image.toString())
 //                db?.deleteNote(position)
 
@@ -76,10 +81,38 @@ RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
                 if (count>1){
                     count--;
                     tvcount.text=count.toString()
+                    tot.text="₹"+(pp.substring(1).toInt()*count).toString()
                     db!!.updateNote(name,count.toString(),price,image.toString())
                 }
             })
+            delete.setOnClickListener(View.OnClickListener {
+                //showAlert(position)
+            })
+
 
         }
+    }
+    fun showAlert(position: Int){
+        val builder: AlertDialog.Builder
+        builder = AlertDialog.Builder(mContext, R.style.AlertDialogCustom)
+        builder.setTitle("Remove Cart item")
+        builder.setMessage("Are you sure want to delete the item")
+                .setPositiveButton("Ok",
+                        DialogInterface.OnClickListener { dialog, which -> // continue with delete
+                            db =DatabaseHelper(mContext)
+                            db?.deleteNote(position)
+                            db.allAuth
+                            onItemClick.onClick()
+                            dialog.cancel()
+                        })
+                .setNegativeButton("Cancel",
+                        DialogInterface.OnClickListener { dialog, which -> // continue with delete
+                            dialog.cancel()
+                        })
+
+                .show()
+    }
+    interface OnDeleteItemClick {
+        fun onClick()
     }
 }

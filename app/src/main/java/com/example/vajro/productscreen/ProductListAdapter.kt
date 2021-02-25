@@ -3,6 +3,8 @@ package com.example.vajro.productscreen
 import Products
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.example.vajro.MainActivity
 import com.example.vajro.R
 import com.example.vajro.database.DatabaseHelper
+import com.example.vajro.database.SqliteHelper
 
 
 class ProductListAdapter  (val mContext: Context,val products: List<Products>,val onItemClick: OnItemClick) :
@@ -24,11 +27,12 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
     lateinit var view: View
     private var db: DatabaseHelper=DatabaseHelper(mContext)
     var count=1
-    var values = db!!.allAuth
+    var values =db.allAuth
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListAdapter.ViewHolder {
         view = LayoutInflater.from(parent.context).inflate(R.layout.productlist, parent, false)
+        values=db!!.allAuth
         return ViewHolder(view)
     }
 
@@ -56,15 +60,18 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
             var minus_btn=view.findViewById<AppCompatButton>(R.id.minus_btn)
             var tvcount=view.findViewById<AppCompatTextView>(R.id.tv_count)
             var wishlistimage = view.findViewById<AppCompatImageView>(R.id.product_list_image_wishList)
+            values = db!!.allAuth
+            Handler(Looper.getMainLooper()).postDelayed({
                 for (i in 0 until db.count){
                     if (objectmenu.name.equals(values.productid.get(i))){
-                        Log.d("shil","3")
-                        count=values.quantity.get(i).toInt()
+                        count=Integer.parseInt(values.quantity.get(i))
                         tvcount.text=values.quantity.get(i)
                         inclayout.visibility=View.VISIBLE
                         add_btn.visibility=View.GONE
                     }
                 }
+            }, 100)
+
 
 
 
@@ -76,7 +83,7 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
                 intent.putExtra("price", products.get(position).price)
                 intent.putExtra("detail", products.get(position).description)
                 intent.putExtra("id", products.get(position).product_id)
-                intent.putExtra("quantity", count)
+                intent.putExtra("quantity", tvcount.text.toString().toInt())
                 if (add_btn.visibility.equals(View.VISIBLE)){
                     intent.putExtra("isitemadded", true)
                 }else{
@@ -109,13 +116,13 @@ class ProductListAdapter  (val mContext: Context,val products: List<Products>,va
             plus_btn.setOnClickListener(View.OnClickListener {
                 count++;
                 tvcount.text=count.toString()
-                db!!.updateNote(objectmenu.name,count.toString(),objectmenu.price,objectmenu.image.toString())
+                db!!.updateNote(objectmenu.name,tvcount.text.toString(),objectmenu.price,objectmenu.image.toString())
             })
             minus_btn.setOnClickListener(View.OnClickListener {
                 if (count>1){
                     count--;
                     tvcount.text=count.toString()
-                    db!!.updateNote(objectmenu.name,count.toString(),objectmenu.price,objectmenu.image.toString())
+                    db!!.updateNote(objectmenu.name,tvcount.text.toString(),objectmenu.price,objectmenu.image.toString())
                 }
             })
 

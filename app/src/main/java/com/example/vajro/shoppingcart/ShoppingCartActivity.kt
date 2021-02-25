@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ShoppingCartActivity : AppCompatActivity() {
+class ShoppingCartActivity : AppCompatActivity(),ShoppingCartAdapter.OnDeleteItemClick {
     lateinit var binding: ActivityShoppingCartBinding
     private var shoppingadapter: ShoppingCartAdapter?=null
     private var db: DatabaseHelper? = null
@@ -34,7 +34,7 @@ class ShoppingCartActivity : AppCompatActivity() {
         db = DatabaseHelper(this)
         if (db!!.getCount() > 0){
             val values = db!!.allAuth
-            shoppingadapter = ShoppingCartAdapter(applicationContext)
+            shoppingadapter = ShoppingCartAdapter(this@ShoppingCartActivity,this)
             val mGridLayoutManager = GridLayoutManager(applicationContext, 1)
             mGridLayoutManager.orientation = LinearLayoutManager.VERTICAL
             binding.rvCartlist.setLayoutManager(mGridLayoutManager)
@@ -54,5 +54,9 @@ class ShoppingCartActivity : AppCompatActivity() {
             onBackPressed()
         })
 
+    }
+
+    override fun onClick() {
+        shoppingadapter?.notifyDataSetChanged()
     }
 }

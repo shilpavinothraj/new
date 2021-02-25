@@ -61,7 +61,7 @@ class ProductdeatilActivity : AppCompatActivity() {
             onBackPressed()
 
         })
-        binding.cartIcon.setOnClickListener(View.OnClickListener {
+        binding.cartlayout.setOnClickListener(View.OnClickListener {
                 var intent = Intent(this, ShoppingCartActivity::class.java)
                 this!!.startActivity(intent)
 

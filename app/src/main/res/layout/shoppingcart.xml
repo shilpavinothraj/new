@@ -2,101 +2,156 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/verticalguide"
+        android:id="@+id/verticalguide80"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3"/>
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/verticalguide8"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8"/>
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_150sdp"
-        android:id="@+id/productimage"
-        android:src="@drawable/ic_vajro_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/verticalguide"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintGuide_percent="0.75"/>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/rate_layout"
+        android:id="@+id/cardlayout"
         android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@+id/verticalguide8"
-        app:layout_constraintStart_toEndOf="@+id/verticalguide"
-       app:layout_constraintTop_toTopOf="parent">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:text="xjksh"
-            android:textSize="@dimen/_16sdp"
-            android:id="@+id/product_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="dxzjkdha"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:id="@+id/product_price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_name"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-              <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        android:background="@color/grey200"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/verticalguide80">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.Guideline
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/verticalguide"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_150sdp"
+                android:id="@+id/productimage"
+                android:src="@drawable/ic_vajro_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/verticalguide"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:visibility="visible"
-               app:layout_constraintTop_toBottomOf="@id/rate_layout"
-                  app:layout_constraintStart_toStartOf="@id/rate_layout">
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:id="@+id/minus_btn"
-                    android:textColor="@color/orange"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_20sdp"
-                    android:text="-"
-                    android:background="@drawable/side_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/productimage"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rate_layout"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:id="@+id/tv_count"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:textSize="@dimen/_20sdp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/minus_btn"
-                    app:layout_constraintTop_toTopOf="parent"/>
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:textStyle="bold"
-                    android:id="@+id/plus_btn"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_20sdp"
-                    android:text="+"
-                    android:background="@drawable/side_btn"
-                    app:layout_constraintStart_toEndOf="@+id/tv_count"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="xjksh"
+                        android:gravity="center"
+                        android:textSize="@dimen/_16sdp"
+                        android:id="@+id/product_name"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="dxzjkdha"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sdp"
+                        android:id="@+id/product_price"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/product_name"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@id/rate_layout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:id="@+id/minus_btn"
+                        android:textColor="@color/orange"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_20sdp"
+                        android:text="-"
+                        android:background="@drawable/side_btn"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:id="@+id/tv_count"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="1"
+                        app:layout_constraintBottom_toBottomOf="@id/minus_btn"
+                        app:layout_constraintStart_toEndOf="@id/minus_btn"
+                        app:layout_constraintTop_toTopOf="@id/minus_btn"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:textStyle="bold"
+                        android:id="@+id/plus_btn"
+                        android:textColor="@color/orange"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_20sdp"
+                        android:text="+"
+                        android:background="@drawable/side_btn"
+                        app:layout_constraintStart_toEndOf="@+id/tv_count"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone"
+        android:id="@+id/btn_delete"
+        android:clickable="true"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+       android:background="@drawable/ic_close_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
@@ -108,11 +163,8 @@
         android:textSize="@dimen/_20sdp"
         android:text="Details"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/verticalguide8"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey200"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/cardlayout"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
